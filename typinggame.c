@@ -75,6 +75,8 @@ void setcolor(int ForgC) //function to change setcolor
  return;
  }
 
+ void gameover();
+
 
 
 
@@ -777,4 +779,18 @@ void userlogin(void){
                     Q=0;q=0;
                     userlogin();
                 }
+}
+
+
+void gameover()
+{
+                    system("cls");
+                    gotoxy(32,13);
+                    setcolor(13);
+                    printf("GAME OVER");
+                    gotoxy(20,13);
+                    printf("\n\n\t\t\tYOUR SCOR IN  THIS  GAME  IS  :  %d\t\t",score);
+                    Sleep(6000);
+                    gotoxy(0,0);
+                    system("cls");
 }
