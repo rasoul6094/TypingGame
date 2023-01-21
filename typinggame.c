@@ -26,6 +26,7 @@ struct history
     char username[10];
     char level[10];
     int point;
+    char idrr[10];
 };
 
 
@@ -646,7 +647,7 @@ void my_callback_on_key_arrival(char c);
 
 int main()
 { 
-    struct history historygame[10];
+    struct history historygame[1000];
   system("cls");
   srand(time(NULL));
 
@@ -654,6 +655,7 @@ int main()
   {
   fillNormal(); fillLong(); fillHard();
   }
+ 
     system("cls");
     setcolor(13);
 	gotoxy(WIN_WIDTH + 5, 2);printf("Typing Tutor");
@@ -679,9 +681,16 @@ int main()
 
 
 // ----------------------------------------------------------------------------------------------------
+     FILE *IDR =fopen("normal.txt","r");
+    char idr[10];
+    fscanf(IDR,"%s",idr);
+    fclose(IDR);
+    
+    
+    
     FILE *his;
     his=fopen("history.txt","a+");
-    fprintf(his,"%s %s %d\n",username1,level1,point1);
+    fprintf(his,"%s %s %d %s\n",username1,level1,point1,idr);
     fclose(his);
 
 
@@ -690,11 +699,11 @@ int main()
     his2=fopen("history.txt","r");
     for(int i=0;;i++)
     {   setcolor(13);
-        fscanf(his2,"%s %s %d",historygame[i].username,historygame[i].level,&historygame[i].point);
+        fscanf(his2,"%s %s %d %s",historygame[i].username,historygame[i].level,&historygame[i].point,historygame[i].idrr);
         fgetc(his2);
         if(strcmp(historygame[i].username,username1)==0 )
         printf("%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
-        if(strcmp(historygame[i].username,username1)==0 &&strcmp(historygame[i].level,level1)==0 && historygame[i].point==point1)
+        if(strcmp(historygame[i].username,username1)==0 &&strcmp(historygame[i].level,level1)==0 && historygame[i].point==point1 && strcmp(idr,historygame[i].idrr)==0)
         break;
     }
     fclose(his2);
