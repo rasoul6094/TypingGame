@@ -61,6 +61,36 @@ void setcolor(int ForgC) //function to change setcolor
  }
 
 
+
+
+
+  void updateScore(){
+	gotoxy(WIN_WIDTH + 7, 5);printf("score: %d\n",score);
+}
+
+
+void drawBorder(){  
+
+
+
+
+	for(int i=0; i<SCREEN_WIDTH; i++){ 
+		gotoxy(i,SCREEN_HEIGHT); printf("#");
+	}
+	
+	for(int i=0; i<SCREEN_HEIGHT; i++){
+		gotoxy(0,i); printf("#");
+		gotoxy(SCREEN_WIDTH,i); printf("#");
+	}
+	for(int i=0; i<SCREEN_HEIGHT; i++){
+		gotoxy(WIN_WIDTH,i); printf("#");
+	}
+
+    updateScore();
+
+
+}
+
 //Represent the head and tail of the doubly linked list  
 struct node *head, *tail = NULL;  
    
