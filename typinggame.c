@@ -66,9 +66,135 @@ struct user{
 
 
 
+void fillNormal()
+{
+ char    str[2];
+    FILE    *fptr;
+    int     i;
+    int     num;
+    char    num2;
+    i = 0;
+    
 
+    fptr = fopen("normal.txt", "a+");
+    if (fptr == NULL)
+    {
+        printf("ERROR Creating File!");
+        exit(1);
+    }
+    
+    
+    while (str[i] != '\0')
+    {
+        num = rand() % 26;
+        num2 = num + 'a';
+        str[i] = num2;
+        i += 1;
+    }
+    // puts(str);
+    fprintf(fptr,"%s\n", str);
+    
+    fclose(fptr);
 
+}
 
+void fillLong()
+{
+ char    str[6];
+    FILE    *fptr;
+    int     i;
+    int     num;
+    char    num2;
+    i = 0;
+
+    fptr = fopen("Long.txt", "a+");
+    if (fptr == NULL)
+    {
+        printf("ERROR Creating File!");
+        exit(1);
+    }
+    
+    
+    while (str[i] != '\0')
+    {
+        num = rand() % 26;
+        num2 = num + 'a';
+        str[i] = num2;
+        i += 1;
+    }
+    // puts(str);
+    fprintf(fptr,"%s\n", str);
+    
+    fclose(fptr);
+
+}
+
+void fillHard()
+{
+ char    str[3];
+    FILE    *fptr;
+    int     i;
+    int     num;
+    char    num2;
+    i = 0;
+
+    fptr = fopen("hard.txt", "a+");
+    if (fptr == NULL)
+    {
+        printf("ERROR Creating File!");
+        exit(1);
+    }
+    
+    
+    while (str[i] != '\0')
+    {
+        num = rand() % 14;
+        num2 = num + 33;
+        str[i] = num2;
+        i += 1;
+    }
+    // puts(str);
+    fprintf(fptr,"%s\n", str);
+    
+    fclose(fptr);
+
+}
+
+void freefileA(){
+  FILE *a; 
+      a=fopen("normal.txt","w");
+      fprintf(a,"%c", ' ');
+          fclose(a);
+}
+void freefileB()
+{
+  FILE *b;
+    b=fopen("Long.txt","w");
+      fprintf(b,"%c", ' ');
+          fclose(b);
+}
+void freefileC()
+{
+  FILE *c;
+ c=fopen("hard.txt","w");
+      fprintf(c,"%c", ' ');
+          fclose(c);
+}
+
+int main()
+{ 
+    
+  system("cls");
+  srand(time(NULL));
+
+  for(int i=0;i<100;i++)
+  {
+  fillNormal(); fillLong(); fillHard();
+  }
+  
+  freefileA();freefileB();freefileC();
+     return 0;
+}
 
 
 void userlogin(void){
