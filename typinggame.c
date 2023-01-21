@@ -4,7 +4,22 @@
 #include<time.h>
 #include<stdlib.h>
 #include<dos.h>
-
+#define SCREEN_WIDTH 90
+#define SCREEN_HEIGHT 26
+#define WIN_WIDTH 70 
+#define MAX_WORD 1000
+#define NUM_WORDS 30
+int score =0;
+char *test;
+int pointr=0;
+int in[15];
+int hight=0;
+int type=0;
+char mobham[10][10]={"rasoul","gametipyng","@#$^&*="};
+int mobhamPOINTER=0;
+char *username1;
+char *level1;
+int point1;
 
 
 struct node{  
@@ -131,6 +146,123 @@ struct user{
 }*pUser;
 
 
+
+//display() will print out the nodes of the list  
+void display(float time,float x,int y) {
+    int lose=0;
+    int count=0;
+    //Node current will point to head  
+    struct node *current = head;
+    head->previous=NULL;  
+     struct node *ptr=(struct node*)malloc(sizeof(struct node));
+      struct node *p=(struct node*)malloc(sizeof(struct node));
+
+    if(head == NULL) {  
+        printf("List is empty\n");  
+        return;  
+    }  
+    // printf("Nodes of doubly linked list: \n");  
+     Sleep(500)  ;
+        // system("cls");
+    while(current != NULL) {  
+        lose+=1;
+        count+=1;
+
+        gotoxy(0,0);
+        for(ptr=current;ptr;ptr=ptr->previous)
+        {
+            if (ptr->previous==NULL)
+            {
+                gotoxy(32,hight);
+                test=ptr->data;
+                if(hight>=7 &&strcmp(ptr->data,"010101010101010")==0)
+                {
+                test=ptr->data=mobham[mobhamPOINTER];
+                mobhamPOINTER+=1;
+                }
+                for (int i = 0; i < strlen(test); i++)
+        {
+            if(in[i]==2)
+            {
+                setcolor(4);
+                printf("%c",test[i]);
+            }
+            else if(in[i]==1)
+            {
+                setcolor(6);
+                printf("%c",test[i]);
+            } 
+            else
+            {
+              setcolor(15);
+              printf("%c",test[i]);
+            }
+            
+
+            
+        }
+        hight+=1;
+        
+            for (int j = 0; j < strlen(test); j++)
+            {
+                if(in[j]!=2)
+                {   type=0;
+                    break;
+                }
+                else
+                    type=1;
+            }
+
+            if(type==1)
+            {
+                ptr=ptr->next;
+                test=ptr->data;
+                ptr->previous=NULL;
+                type=0;
+                hight-=1;
+                for (int j = 0; j < strlen(test); j++)
+                in[j]=0;
+                pointr=0;
+                count-=1;
+                if(strlen(test)==6 || strlen(test)==7 || strlen(test)==10)
+                score+=4;
+                else if(strlen(test)<=4)
+                score+=1;
+                else if(strlen(test)<=5)
+                score+=3;
+                else if(strlen(test)<=8)
+                score+=2;
+                break;
+            }
+            
+
+
+            }
+            
+            
+            else
+            {
+                setcolor(15);
+            printf("\t\t\t\t%s\n", ptr->data);
+            }
+        } 
+
+        // Sleep(time);
+        if(lose%y==0)
+        time*=x;
+        Sleep(time);
+        system("cls");
+        setcolor(15);
+        drawBorder();
+
+
+        current = current->next;  
+
+        if(count==26)
+        return ;
+        
+    }  
+}  
 
 
 void easy()
