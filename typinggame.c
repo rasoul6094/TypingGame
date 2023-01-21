@@ -21,6 +21,12 @@ char *username1;
 char *level1;
 int point1;
 
+struct history
+{
+    char username[10];
+    char level[10];
+    int point;
+};
 
 struct node{  
     char  *data;  
@@ -638,16 +644,37 @@ int main()
   
 	HANDLE thread_id =start_listening(my_callback_on_key_arrival);
 
-	
-	
-        switch(levelGAME)
+      switch(levelGAME)
     {
-        case 1:   easy();     break;
-        case 2:   medium();   break;
-        case 3:   hard();     break;
+        case 1:   easy();      strcpy(level1,"easy");     point1=score;  break;
+        case 2:   medium();    strcpy(level1,"medium");   point1=score; break;
+        case 3:   hard();      strcpy(level1,"hard");     point1=score; break;
     }
-  
-  
+
+
+// ----------------------------------------------------------------------------------------------------
+    FILE *his;
+    his=fopen("history.txt","a+");
+    fprintf(his,"%s %s %d\n",username1,level1,point1);
+    fclose(his);
+
+
+
+    FILE *his2;
+    his2=fopen("history.txt","r");
+    for(int i=0;;i++)
+    {	setcolor(13);
+        fscanf(his2,"%s %s %d",historygame[i].username,historygame[i].level,&historygame[i].point);
+        fgetc(his2);
+        if(strcmp(historygame[i].username,username1)==0 )
+        printf("%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
+        if(strcmp(historygame[i].username,username1)==0 &&strcmp(historygame[i].level,level1)==0 && historygame[i].point==point1)
+        break;
+    }
+    fclose(his2);
+
+
+// ----------------------------------------------------------------------------------------------------------
   
   freefileA();freefileB();freefileC();
   WaitForSingleObject(thread_id,INFINITE);
@@ -731,6 +758,7 @@ void userlogin(void){
                         q=1;
                         Sleep(1500);
                         system("cls");
+			strcpy(username1,uName);
                     }
                 }
             }
