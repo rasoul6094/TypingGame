@@ -606,6 +606,12 @@ void freefileC()
           fclose(c);
 }
 
+void my_callback_on_key_arrival(char c);
+
+
+
+
+
 int main()
 { 
     
@@ -628,6 +634,10 @@ int main()
     int levelGAME=level();
   
   
+	HANDLE thread_id =start_listening(my_callback_on_key_arrival);
+
+	
+	
         switch(levelGAME)
     {
         case 1:   easy();     break;
@@ -638,7 +648,37 @@ int main()
   
   
   freefileA();freefileB();freefileC();
+  WaitForSingleObject(thread_id,INFINITE);
      return 0;
+}
+
+
+void my_callback_on_key_arrival(char c)
+{
+if(strcmp(test,"010101010101010")!=0){
+  
+     if(c==8)
+    {
+        if(pointr-1>=0)
+        {
+              pointr-=1;
+            in[pointr]=0;
+        }          
+    }
+    else if(c==test[pointr])
+    {   
+             in[pointr]=2;
+            pointr+=1;
+    }
+    else if(c!=test[pointr] )
+    {
+        if(pointr+1<strlen(test))
+        {
+             in[pointr]=1;
+             pointr+=1;
+        }
+    }
+}
 }
 
 
