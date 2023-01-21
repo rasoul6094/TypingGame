@@ -66,6 +66,233 @@ struct user{
 
 
 
+
+void easy()
+{
+    char line[128],zobale[128];
+       FILE *fp,*fp2,*fp3;
+    int n=1;
+    
+    //Add nodes to the list  
+     fp = fopen("normal.txt", "r");
+     fp2 = fopen("Long.txt", "r");
+     fp3 = fopen("hard.txt", "r");
+        drawBorder();
+        
+    while(n<=50){
+        
+        for(int i=n;i<=10;i++)
+        {
+            fscanf(fp, "%s", &line);
+            addNode(strdup(line));
+            fgetc(fp);
+            n++;
+            
+        }
+        for(int i=1;i<=5;i++)
+        {
+             
+         fscanf(fp2, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp2);
+        n++;
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            
+        }
+        for(int i=1;i<=35;i++){
+         if(n==40 || n==30 || n==20)
+            {
+                addNode("010101010101010");
+                n++;
+            }
+            else
+            {
+        fscanf(fp3, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp3);
+        n++;
+        fscanf(fp2, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp2);
+        n++;
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            }
+        }
+     }
+  
+    //Displays the nodes present in the list  
+    display(10000,.8,10);  
+    gameover();
+}
+void medium()
+{
+    char line[128],zobale[128];
+       FILE *fp,*fp2,*fp3;
+    int n=1;
+    
+    //Add nodes to the list  
+     fp = fopen("normal.txt", "r");
+     fp2 = fopen("Long.txt", "r");
+     fp3 = fopen("hard.txt", "r");
+        drawBorder();
+        
+     while(n<=50){
+        for(int i=n;i<=5;i++)
+        {
+             
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            
+        }
+        for(int i=1;i<=10;i++)
+        {
+            
+         fscanf(fp2, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp2);
+        n++;
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            
+        }
+        for(int i=1;i<=35;i++){
+             if(n==20 || n==30 || n==40)
+            {
+            addNode("010101010101010");
+                n++;
+            }
+            else
+            {
+        fscanf(fp3, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp3);
+        n++;
+        fscanf(fp2, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp2);
+        n++;
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            }
+        }
+     }
+    //Displays the nodes present in the list  
+    display(8000,.7,10);  
+    gameover();
+
+}
+void hard()
+{
+    char line[128],zobale[128];
+       FILE *fp,*fp2,*fp3;
+    int n=1;
+    
+    //Add nodes to the list  
+     fp = fopen("normal.txt", "r");
+     fp2 = fopen("Long.txt", "r");
+     fp3 = fopen("hard.txt", "r");
+        drawBorder();
+        
+    while(n<=50){
+        
+        for(int i=n;i<=5;i++)
+        {
+           
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            
+        }
+        for(int i=1;i<=5;i++)
+        {
+            
+         fscanf(fp2, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp2);
+        n++;
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            
+        }
+        for(int i=1;i<=40;i++){
+             if(n==15 || n==25 || n==35)
+            {
+                addNode("010101010101010");
+                n++;
+            }
+            else
+            {
+        fscanf(fp3, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp3);
+        n++;
+        fscanf(fp2, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp2);
+        n++;
+        fscanf(fp, "%s", &line);
+        addNode(strdup(line));
+        fgetc(fp);
+        n++;
+            }
+        }
+     }
+   
+    //Displays the nodes present in the list  
+    display(5000,.6,17);  
+    gameover();
+
+}
+
+
+
+
+
+
+
+int level()
+{
+    int i;
+    do{
+          system("cls");
+
+    
+      setcolor(13);
+    printf("\n\n\n\n\n\t\t\t GAME LEVEL");
+          setcolor(4);
+printf("\n\t\t\t=====================");
+      setcolor(13);
+printf("\n\n\n\n\t\t\tSelect the GAME LEVEL...!!");
+if(getch()==13)
+  system("cls");
+        setcolor(13);
+  printf("\n\n\n\t\t\t1. easy\t\t2. medium\t\t3. hard");
+printf("\n\n\n\t\t\t\tENTER YOUR CHOICE: ");
+    scanf("%d",& i);
+    system("cls");
+          setcolor(15);}while(i!=1 && i!=2 && i!=3);
+
+    return i;
+}
+
+
+
+
 void fillNormal()
 {
  char    str[2];
@@ -191,6 +418,26 @@ int main()
   {
   fillNormal(); fillLong(); fillHard();
   }
+    system("cls");
+	gotoxy(WIN_WIDTH + 5, 2);printf("Typing Tutor");
+	gotoxy(WIN_WIDTH + 6, 4);printf("----------");
+	gotoxy(WIN_WIDTH + 6, 6);printf("----------");
+	gotoxy(18, 5);printf("Press any key to start");
+	getch();
+    gotoxy(18, 5);printf("                      ");
+
+    userlogin();
+    int levelGAME=level();
+  
+  
+        switch(levelGAME)
+    {
+        case 1:   easy();     break;
+        case 2:   medium();   break;
+        case 3:   hard();     break;
+    }
+  
+  
   
   freefileA();freefileB();freefileC();
      return 0;
