@@ -306,15 +306,22 @@ void easy()
             }
             else
             {
-             
-         fscanf(fp2, "%s", &line);
-        addNode(strdup(line));
-        fgetc(fp2);
-        n++;
-        fscanf(fp, "%s", &line);
-        addNode(strdup(line));
-        fgetc(fp);
-        n++;
+           if(i%2==1) 
+           {
+                fscanf(fp2, "%s", &line);
+                addNode(strdup(line));
+                fgetc(fp2);
+                 n++;
+                 continue;
+           }
+            else
+            {    
+            fscanf(fp, "%s", &line);
+            addNode(strdup(line));
+            fgetc(fp);
+             n++;
+            continue;
+             }
             }
         }
         for(int i=1;i<=35;i++){
@@ -376,14 +383,22 @@ void medium()
             }
             else
             {
+                if(i%2==1) 
+           {
          fscanf(fp2, "%s", &line);
         addNode(strdup(line));
         fgetc(fp2);
         n++;
+        continue;
+           }
+           else
+           {
         fscanf(fp, "%s", &line);
         addNode(strdup(line));
         fgetc(fp);
         n++;
+        continue;
+           }
             }
         }
         for(int i=1;i<=35;i++){
@@ -446,14 +461,22 @@ void hard()
             }
             else
             {
+                if(i%2==1) 
+           {
          fscanf(fp2, "%s", &line);
         addNode(strdup(line));
         fgetc(fp2);
         n++;
+        continue;
+           }
+           else
+           {
         fscanf(fp, "%s", &line);
         addNode(strdup(line));
         fgetc(fp);
         n++;
+        continue;
+           }
             }
         }
         for(int i=1;i<=40;i++){
@@ -680,12 +703,14 @@ int main()
     }
 
 
-// ----------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------- history game
      FILE *IDR =fopen("normal.txt","r");
     char idr[10];
     fscanf(IDR,"%s",idr);
     fclose(IDR);
     
+    int history_num=0;
+    struct history tmp1,tmp2;
     
     
     FILE *his;
@@ -693,22 +718,53 @@ int main()
     fprintf(his,"%s %s %d %s\n",username1,level1,point1,idr);
     fclose(his);
 
-
-
+    gotoxy(0,12);
+    printf("\t\thistory of user %s in typing game :\n\n",username1);
     FILE *his2;
     his2=fopen("history.txt","r");
     for(int i=0;;i++)
     {   setcolor(13);
         fscanf(his2,"%s %s %d %s",historygame[i].username,historygame[i].level,&historygame[i].point,historygame[i].idrr);
         fgetc(his2);
-        if(strcmp(historygame[i].username,username1)==0 )
-        printf("%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
+        history_num=i+1;
+        // if(strcmp(historygame[i].username,username1)==0 )
+        // printf("\t\t%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
         if(strcmp(historygame[i].username,username1)==0 &&strcmp(historygame[i].level,level1)==0 && historygame[i].point==point1 && strcmp(idr,historygame[i].idrr)==0)
         break;
     }
     fclose(his2);
 
-     Sleep(4000);
+    for (int i = 0; i < history_num; i++)
+    {
+        for (int j = i+1; j < history_num; j++)
+        {
+            if(historygame[i].point<historygame[j].point)
+            {
+                tmp1=historygame[i];
+                historygame[i]=historygame[j];
+                historygame[j]=tmp1;
+            }
+            else
+            {
+                if((strcmp(historygame[i].level,"easy")==0&&(strcmp(historygame[j].level,"hard")==0||strcmp(historygame[j].level,"medium")==0))||(strcmp(historygame[i].level,"medium")==0 &&strcmp(historygame[j].level,"hard")==0))
+                    {
+                         tmp2=historygame[i];
+                        historygame[i]=historygame[j];
+                        historygame[j]=tmp2;
+                    }
+            }
+        }
+        
+    }
+    for (int i = 0; i < history_num; i++)
+    {
+        if(strcmp(historygame[i].username,username1)==0 )
+        printf("\t\t%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
+    }
+    
+
+
+
 // ----------------------------------------------------------------------------------------------------------
     freefileA();freefileB();freefileC();
     WaitForSingleObject(thread_id,INFINITE);
