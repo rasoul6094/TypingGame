@@ -15,12 +15,12 @@ int pointr=0;
 int in[15];
 int hight=0;
 int type=0;
-char mobham[10][10]={"rasoul","gametipyng","@#$^&*="};
+char mobham[3][10]={"rasoul","gametyping","@#$^&*="};
 int mobhamPOINTER=0;
-char *username1;
-char *level1;
+char username1[10];
+char level1[10];
 int point1;
-
+// ------------------------------------------------------
 struct history
 {
     char username[10];
@@ -28,13 +28,18 @@ struct history
     int point;
 };
 
+
+
+
+
+
 struct node{  
     char  *data;  
     struct node *previous;  
     struct node *next;  
-};   
-
-
+};      
+ 
+// ----------------------------------
 DWORD WINAPI keypress_callback( LPVOID args ){
   void (*callback)(char) = (void (*)(char))((void *)(args));
 
@@ -50,6 +55,10 @@ HANDLE start_listening(void (*callback)(char)){
 }
 
 
+
+
+
+//.......................................................................................................................................................................
  COORD coord={0,0};
  void gotoxy(int x,int y);
 void gotoxy(int x,int y)//function to set the cursor position(gotoxy())
@@ -63,7 +72,7 @@ void writech(int col, int row, char *c) {
     gotoxy(col, row);
     WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), c, strlen(c), NULL, NULL);
 }
-
+//.......................................................................................................................................................................
 void setcolor(int ForgC) //function to change setcolor
  {
  WORD wColor;
@@ -80,10 +89,9 @@ void setcolor(int ForgC) //function to change setcolor
  }
  return;
  }
+// -------------------------------------------------------------------------------------------------------
 
  void gameover();
-
-
 
 
 
@@ -113,7 +121,6 @@ void drawBorder(){
 
 
 }
-
 //Represent the head and tail of the doubly linked list  
 struct node *head, *tail = NULL;  
    
@@ -143,18 +150,7 @@ void addNode(char *data) {
         tail->next = NULL;  
     }  
 }  
-
-
-
-void userlogin(void);
-
-struct user{
-    char username[10];
-    char password[10];
-}*pUser;
-
-
-
+   
 //display() will print out the nodes of the list  
 void display(float time,float x,int y) {
     int lose=0;
@@ -223,9 +219,6 @@ void display(float time,float x,int y) {
 
             if(type==1)
             {
-                ptr=ptr->next;
-                test=ptr->data;
-                ptr->previous=NULL;
                 type=0;
                 hight-=1;
                 for (int j = 0; j < strlen(test); j++)
@@ -240,6 +233,9 @@ void display(float time,float x,int y) {
                 score+=3;
                 else if(strlen(test)<=8)
                 score+=2;
+                ptr=ptr->next;
+                test=ptr->data;
+                ptr->previous=NULL;
                 break;
             }
             
@@ -271,6 +267,11 @@ void display(float time,float x,int y) {
         
     }  
 }  
+   
+
+
+
+
 
 
 void easy()
@@ -297,6 +298,13 @@ void easy()
         }
         for(int i=1;i<=5;i++)
         {
+            if(n==15)
+            {
+                addNode("010101010101010");
+                n++;
+            }
+            else
+            {
              
          fscanf(fp2, "%s", &line);
         addNode(strdup(line));
@@ -306,10 +314,10 @@ void easy()
         addNode(strdup(line));
         fgetc(fp);
         n++;
-            
+            }
         }
         for(int i=1;i<=35;i++){
-         if(n==40 || n==30 || n==20)
+         if(n==30 || n==20)
             {
                 addNode("010101010101010");
                 n++;
@@ -360,7 +368,13 @@ void medium()
         }
         for(int i=1;i<=10;i++)
         {
-            
+            if(n==15)
+            {
+                addNode("010101010101010");
+                n++;
+            }
+            else
+            {
          fscanf(fp2, "%s", &line);
         addNode(strdup(line));
         fgetc(fp2);
@@ -369,10 +383,10 @@ void medium()
         addNode(strdup(line));
         fgetc(fp);
         n++;
-            
+            }
         }
         for(int i=1;i<=35;i++){
-             if(n==20 || n==30 || n==40)
+             if( n==20 || n==30)
             {
             addNode("010101010101010");
                 n++;
@@ -424,7 +438,13 @@ void hard()
         }
         for(int i=1;i<=5;i++)
         {
-            
+            if(n==7)
+            {
+                addNode("010101010101010");
+                n++;
+            }
+            else
+            {
          fscanf(fp2, "%s", &line);
         addNode(strdup(line));
         fgetc(fp2);
@@ -433,10 +453,10 @@ void hard()
         addNode(strdup(line));
         fgetc(fp);
         n++;
-            
+            }
         }
         for(int i=1;i<=40;i++){
-             if(n==15 || n==25 || n==35)
+             if(n==15 ||  n==25)
             {
                 addNode("010101010101010");
                 n++;
@@ -470,7 +490,6 @@ void hard()
 
 
 
-
 int level()
 {
     int i;
@@ -495,10 +514,7 @@ printf("\n\n\n\t\t\t\tENTER YOUR CHOICE: ");
 
     return i;
 }
-
-
-
-
+// FILE KALAMAT------------------------------------------------------------------------------------------------------------------------------
 void fillNormal()
 {
  char    str[2];
@@ -614,15 +630,23 @@ void freefileC()
           fclose(c);
 }
 
-void my_callback_on_key_arrival(char c);
+// ---------------------------------------------------------------------------------------------------
 
+void userlogin(void);
+
+struct user{
+    char username[10];
+    char password[10];
+}*pUser;
+
+void my_callback_on_key_arrival(char c);
 
 
 
 
 int main()
 { 
-    
+    struct history historygame[10];
   system("cls");
   srand(time(NULL));
 
@@ -631,18 +655,20 @@ int main()
   fillNormal(); fillLong(); fillHard();
   }
     system("cls");
+    setcolor(13);
 	gotoxy(WIN_WIDTH + 5, 2);printf("Typing Tutor");
 	gotoxy(WIN_WIDTH + 6, 4);printf("----------");
 	gotoxy(WIN_WIDTH + 6, 6);printf("----------");
 	gotoxy(18, 5);printf("Press any key to start");
 	getch();
     gotoxy(18, 5);printf("                      ");
-
+    setcolor(15);
     userlogin();
     int levelGAME=level();
-  
-  
-	HANDLE thread_id =start_listening(my_callback_on_key_arrival);
+    
+    
+
+    HANDLE thread_id =start_listening(my_callback_on_key_arrival);
 
       switch(levelGAME)
     {
@@ -663,7 +689,7 @@ int main()
     FILE *his2;
     his2=fopen("history.txt","r");
     for(int i=0;;i++)
-    {	setcolor(13);
+    {   setcolor(13);
         fscanf(his2,"%s %s %d",historygame[i].username,historygame[i].level,&historygame[i].point);
         fgetc(his2);
         if(strcmp(historygame[i].username,username1)==0 )
@@ -675,12 +701,12 @@ int main()
 
 
 // ----------------------------------------------------------------------------------------------------------
-  
-  freefileA();freefileB();freefileC();
-  WaitForSingleObject(thread_id,INFINITE);
-     return 0;
-}
+    freefileA();freefileB();freefileC();
+    WaitForSingleObject(thread_id,INFINITE);
+    return 0;
 
+
+}
 
 void my_callback_on_key_arrival(char c)
 {
@@ -709,7 +735,6 @@ if(strcmp(test,"010101010101010")!=0){
     }
 }
 }
-
 
 void userlogin(void){
     FILE *fp;
@@ -743,7 +768,6 @@ void userlogin(void){
             setcolor(6);
             printf("\n\n\n\t\t\t\tUsername: ");
             scanf("%9s",uName);
-            username1=uName;
             system("cls");
             printf("\n\n\n\t\t\t\tPassword: ");
             scanf("%9s",pwd);
@@ -758,7 +782,7 @@ void userlogin(void){
                         q=1;
                         Sleep(1500);
                         system("cls");
-			strcpy(username1,uName);
+                        strcpy(username1,uName);
                     }
                 }
             }
@@ -808,8 +832,6 @@ void userlogin(void){
                     userlogin();
                 }
 }
-
-
 void gameover()
 {
                     system("cls");
