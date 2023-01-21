@@ -699,7 +699,7 @@ int main()
     }
     fclose(his2);
 
-
+     Sleep(4000);
 // ----------------------------------------------------------------------------------------------------------
     freefileA();freefileB();freefileC();
     WaitForSingleObject(thread_id,INFINITE);
