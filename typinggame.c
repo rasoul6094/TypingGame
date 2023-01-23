@@ -15,11 +15,13 @@ int pointr=0;
 int in[15];
 int hight=0;
 int type=0;
-char mobham[3][10]={"rasoul","gametyping","@#$^&*="};
+char mobham[3][10]={"rasoul","typinggame","!@#+_)"};
 int mobhamPOINTER=0;
 char username1[10];
 char level1[10];
 int point1;
+time_t now;
+int left=0,right=0,defaultt=0;
 // ------------------------------------------------------
 struct history
 {
@@ -107,15 +109,15 @@ void drawBorder(){
 
 
 	for(int i=0; i<SCREEN_WIDTH; i++){ 
-		gotoxy(i,SCREEN_HEIGHT); printf("#");
+		gotoxy(i,SCREEN_HEIGHT); printf("*");
 	}
 	
 	for(int i=0; i<SCREEN_HEIGHT; i++){
-		gotoxy(0,i); printf("#");
-		gotoxy(SCREEN_WIDTH,i); printf("#");
+		gotoxy(0,i); printf("*");
+		gotoxy(SCREEN_WIDTH,i); printf("*");
 	}
 	for(int i=0; i<SCREEN_HEIGHT; i++){
-		gotoxy(WIN_WIDTH,i); printf("#");
+		gotoxy(WIN_WIDTH,i); printf("*");
 	}
 
     updateScore();
@@ -349,7 +351,8 @@ void easy()
      }
   
     //Displays the nodes present in the list  
-    display(10000,.8,10);  
+    display(10000,.8,10);
+    time(&now);
     gameover();
 }
 void medium()
@@ -425,7 +428,8 @@ void medium()
         }
      }
     //Displays the nodes present in the list  
-    display(8000,.7,10);  
+    display(8000,.7,10);
+    time(&now);  
     gameover();
 
 }
@@ -504,7 +508,8 @@ void hard()
      }
    
     //Displays the nodes present in the list  
-    display(5000,.6,17);  
+    display(5000,.6,17);
+    time(&now);  
     gameover();
 
 }
@@ -535,10 +540,37 @@ printf("\n\n\n\t\t\t\tENTER YOUR CHOICE: ");
     scanf("%d",& i);
     system("cls");
           setcolor(15);}while(i!=1 && i!=2 && i!=3);
+          int j;
+           do{
+          system("cls");
+
+    
+      setcolor(13);
+    printf("\n\n\n\n\n\t\t\t right or left");
+          setcolor(4);
+printf("\n\t\t\t=====================");
+      setcolor(13);
+printf("\n\n\n\n\t\t\tSelect the YOUR favorite...!!");
+if(getch()==13)
+  system("cls");
+        setcolor(13);
+  printf("\n\n\n\t\t\t1. right\t2. left\t\t3. default");
+printf("\n\n\n\t\t\t\tENTER YOUR CHOICE: ");
+    scanf("%d",& j);
+    system("cls");
+          setcolor(15);}while(j!=1 && j!=2 && j!=3);
+
+          if(j==1)
+          right=1;
+          else if(j==2)
+          left=1;
+          else
+          defaultt=1;
+
 
     return i;
 }
-// FILE KALAMAT------------------------------------------------------------------------------------------------------------------------------
+// FILE KALAMAT----------------------------------------------------------------------------------------------
 void fillNormal()
 {
  char    str[2];
@@ -555,18 +587,42 @@ void fillNormal()
         printf("ERROR Creating File!");
         exit(1);
     }
-    
+ 
     
     while (str[i] != '\0')
     {
+
         num = rand() % 26;
+        if(left==1 && (num<=8 ||num>=16))
+        {
         num2 = num + 'a';
         str[i] = num2;
         i += 1;
+        }
+       else if(right==1 && (num>8 && num<16))
+        {
+        num2 = num + 'a';
+        str[i] = num2;
+        i += 1;
+        }
+        else if(defaultt==1)
+        {
+        num2 = num + 'a';
+        str[i] = num2;
+        i += 1;
+        }
+
+
     }
+  
+  
+
+
+
+    
     // puts(str);
     fprintf(fptr,"%s\n", str);
-    
+    // strcat(mobham,str);
     fclose(fptr);
 
 }
@@ -591,13 +647,28 @@ void fillLong()
     while (str[i] != '\0')
     {
         num = rand() % 26;
+         if(left==1 && (num<=8 || num>=16))
+        {
         num2 = num + 'a';
         str[i] = num2;
         i += 1;
+        }
+       else if(right==1 && (num>8 &&num<16))
+        {
+        num2 = num + 'a';
+        str[i] = num2;
+        i += 1;
+        }
+        else if(defaultt==1)
+        {
+        num2 = num + 'a';
+        str[i] = num2;
+        i += 1;
+        }
     }
     // puts(str);
-    fprintf(fptr,"%s\n", str);
-    
+    fprintf(fptr,"%s\n", str);    
+    // strcpy(mobham[2][0],str);
     fclose(fptr);
 
 }
@@ -621,14 +692,29 @@ void fillHard()
     
     while (str[i] != '\0')
     {
-        num = rand() % 14;
-        num2 = num + 33;
+        num = (rand() % 30) +34;
+        if(left==1 && ((num>=33 && num<39 && num!=34 )||(num>=49 && num<=55)|| num==64))
+        {
+        num2 = num ;
         str[i] = num2;
         i += 1;
+        }
+        else if(right==1 && ((num>=39 && num<=48 )||(num>=56 && num<=63)|| num==34))
+        {
+        num2 = num ;
+        str[i] = num2;
+        i += 1;
+        }
+        else if(defaultt==1)
+        {
+        num2 = num ;
+        str[i] = num2;
+        i += 1;
+        }
     }
     // puts(str);
     fprintf(fptr,"%s\n", str);
-    
+    // strcpy(mobham[3][0],str);
     fclose(fptr);
 
 }
@@ -665,46 +751,10 @@ struct user{
 
 void my_callback_on_key_arrival(char c);
 
-
-
-
-int main()
-{ 
+void history()
+{
     struct history historygame[1000];
-  system("cls");
-  srand(time(NULL));
-
-  for(int i=0;i<100;i++)
-  {
-  fillNormal(); fillLong(); fillHard();
-  }
- 
-    system("cls");
-    setcolor(13);
-	gotoxy(WIN_WIDTH + 5, 2);printf("Typing Tutor");
-	gotoxy(WIN_WIDTH + 6, 4);printf("----------");
-	gotoxy(WIN_WIDTH + 6, 6);printf("----------");
-	gotoxy(18, 5);printf("Press any key to start");
-	getch();
-    gotoxy(18, 5);printf("                      ");
-    setcolor(15);
-    userlogin();
-    int levelGAME=level();
-    
-    
-
-    HANDLE thread_id =start_listening(my_callback_on_key_arrival);
-
-      switch(levelGAME)
-    {
-        case 1:   easy();      strcpy(level1,"easy");     point1=score;  break;
-        case 2:   medium();    strcpy(level1,"medium");   point1=score; break;
-        case 3:   hard();      strcpy(level1,"hard");     point1=score; break;
-    }
-
-
-// ---------------------------------------------------------------------------------------------------- history game
-     FILE *IDR =fopen("normal.txt","r");
+    FILE *IDR =fopen("hard.txt","r");
     char idr[10];
     fscanf(IDR,"%s",idr);
     fclose(IDR);
@@ -727,8 +777,6 @@ int main()
         fscanf(his2,"%s %s %d %s",historygame[i].username,historygame[i].level,&historygame[i].point,historygame[i].idrr);
         fgetc(his2);
         history_num=i+1;
-        // if(strcmp(historygame[i].username,username1)==0 )
-        // printf("\t\t%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
         if(strcmp(historygame[i].username,username1)==0 &&strcmp(historygame[i].level,level1)==0 && historygame[i].point==point1 && strcmp(idr,historygame[i].idrr)==0)
         break;
     }
@@ -738,20 +786,23 @@ int main()
     {
         for (int j = i+1; j < history_num; j++)
         {
-            if(historygame[i].point<historygame[j].point)
-            {
-                tmp1=historygame[i];
-                historygame[i]=historygame[j];
-                historygame[j]=tmp1;
-            }
-            else
-            {
-                if((strcmp(historygame[i].level,"easy")==0&&(strcmp(historygame[j].level,"hard")==0||strcmp(historygame[j].level,"medium")==0))||(strcmp(historygame[i].level,"medium")==0 &&strcmp(historygame[j].level,"hard")==0))
+
+
+             if((strcmp(historygame[i].level,"easy")==0&&(strcmp(historygame[j].level,"hard")==0||strcmp(historygame[j].level,"medium")==0))||(strcmp(historygame[i].level,"medium")==0 &&strcmp(historygame[j].level,"hard")==0))
                     {
                          tmp2=historygame[i];
                         historygame[i]=historygame[j];
                         historygame[j]=tmp2;
                     }
+           
+            else if(strcmp(historygame[i].level,historygame[j].level)==0)
+            {
+                 if(historygame[i].point<historygame[j].point)
+            {
+                tmp1=historygame[i];
+                historygame[i]=historygame[j];
+                historygame[j]=tmp1;
+            }
             }
         }
         
@@ -759,14 +810,55 @@ int main()
     for (int i = 0; i < history_num; i++)
     {
         if(strcmp(historygame[i].username,username1)==0 )
-        printf("\t\t%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
+        {
+            if(strcmp(historygame[i].idrr,idr)==0)
+            {
+                setcolor(4);
+                printf("\t\t%s\t\t %s\t\t %d\t\t%s",historygame[i].username,historygame[i].level,historygame[i].point,ctime(&now));
+                setcolor(13);
+            }
+            else
+                printf("\t\t%s\t\t %s\t\t %d\n",historygame[i].username,historygame[i].level,historygame[i].point);
+        }
     }
+
+
+        freefileA();freefileB();freefileC();
+
+}
+
+
+int main()
+{ 
+    system("cls"); 
+    system("cls");
+    setcolor(13);
+	gotoxy(WIN_WIDTH + 5, 2);printf("Typing GAME");
+	gotoxy(WIN_WIDTH + 6, 4);printf("----------");
+	gotoxy(WIN_WIDTH + 6, 6);printf("----------");
+	gotoxy(18, 5);printf("Press any key to start");
+	getch();
+    gotoxy(18, 5);printf("                      ");
+    setcolor(15);
+    userlogin();
+    int levelGAME=level();
+      srand(time(NULL));
+
+  for(int i=0;i<100;i++)
+  {
+  fillNormal(); fillLong(); fillHard();
+  }
     
 
+    HANDLE thread_id =start_listening(my_callback_on_key_arrival);
 
-
-// ----------------------------------------------------------------------------------------------------------
-    freefileA();freefileB();freefileC();
+      switch(levelGAME)
+    {
+        case 1:   easy();      strcpy(level1,"easy");     point1=score;  break;
+        case 2:   medium();    strcpy(level1,"medium");   point1=score; break;
+        case 3:   hard();      strcpy(level1,"hard");     point1=score; break;
+    }
+    history();
     WaitForSingleObject(thread_id,INFINITE);
     return 0;
 
@@ -807,6 +899,7 @@ void userlogin(void){
 
     pUser=(struct user *)malloc(sizeof(struct user));
     do{
+        i=0;
     system("cls");
             setcolor(13);
             printf("\n\n\n\n\n\t\t\tWELCOME TO MY GAME");
@@ -824,8 +917,8 @@ void userlogin(void){
             setcolor(15);}while(i!=1 && i!=2);
     switch(i){
         case 1:
-            if ( ( fp=fopen("user.dat", "r+")) == NULL) {
-                if ( ( fp=fopen("user.dat", "w+")) == NULL) {
+            if ( ( fp=fopen("user.txt", "r+")) == NULL) {
+                if ( ( fp=fopen("user.txt", "w+")) == NULL) {
                     printf ("Could not open file\n");
                     exit ( 1);
                 }
@@ -842,12 +935,13 @@ void userlogin(void){
                 if( strcmp ( pUser->username, uName) == 0) {
                     if( strcmp ( pUser->password, pwd) == 0) {
                         setcolor(11);
-                        printf ("\n\n\n\t\t\t\tsigned in\n");
+                        printf ("\n\n\n\t\t\t\tsigned in\n\n\n\n\t\t\t\tis loading...\t\t");
                         setcolor(15);
                         q=1;
                         Sleep(1500);
                         system("cls");
                         strcpy(username1,uName);
+                        fclose(fp);
                     }
                 }
             }
@@ -860,6 +954,8 @@ void userlogin(void){
                       setcolor(15);
                       Sleep(1500);
                       system("cls");
+                      fclose(fp);
+                      free(pUser);
                       userlogin();
                     }
                     else
@@ -868,8 +964,8 @@ void userlogin(void){
         Q=1;
             do
             {
-                if ( ( fp=fopen("user.dat", "a+")) == NULL) {
-                    if ( ( fp=fopen("user.dat", "w+")) == NULL) {
+                if ( ( fp=fopen("user.txt", "a+")) == NULL) {
+                    if ( ( fp=fopen("user.txt", "w+")) == NULL) {
                         printf ("Could not open file\n");
                         exit ( 1);
                     }
@@ -884,13 +980,14 @@ void userlogin(void){
                     fwrite (pUser, sizeof(struct user), 1, fp);
                     printf("\n\n\n\t\t\t\tAdd another account? (Y/N): ");
                     scanf("%c",&c);
-                }while(c=='Y'||c=='y');
+                }while((c=='Y'||c=='y')&&(c!='n' || c!='N'));
                     setcolor(15);
                     system("cls");
+                    fclose(fp);
                 break;
     }
-                    free ( pUser);
-                    fclose(fp);
+                free ( pUser);
+                
                 if(Q==1)
                 {
                     Q=0;q=0;
