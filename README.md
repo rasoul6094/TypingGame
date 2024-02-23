@@ -5,29 +5,62 @@
 
 
 #include <iostream>
-#include <vector>
+#include <unordered_map>
 
 struct Point {
-    int x, y, z;
+    int x;
+    int y;
+    int z;
+
+    bool operator==(const Point &other) const {
+        return x == other.x && y == other.y && z == other.z;
+    }
 };
 
-int main() {
-    std::vector<Point> points(7);
+struct PointHash {
+    std::size_t operator()(const Point &point) const {
+        std::size_t h1 = std::hash<int>{}(point.x);
+        std::size_t h2 = std::hash<int>{}(point.y);
+        std::size_t h3 = std::hash<int>{}(point.z);
+        return h1 ^ (h2 << 1) ^ (h3 << 2);
+    }
+};
 
-    std::cout << "Enter the coordinates of 7 points on the rectangular cube:\n";
-    for (int i = 0; i < 7; ++i) {
-        std::cout << "Enter coordinates for point " << i + 1 << " (x y z): ";
-        std::cin >> points[i].x >> points[i].y >> points[i].z;
+Point findMissingPoint(Point points[], int n) {
+    std::unordered_map<Point, int, PointHash> pointCount;
+    
+    // Count occurrences of each point
+    for (int i = 0; i < n; ++i) {
+        pointCount[points[i]]++;
     }
 
-    Point eighthPoint;
+    // Find the point with only 1 occurrence
+    Point missingPoint;
+    for (int i = 0; i < n; ++i) {
+        if (pointCount[points[i]] == 1) {
+            missingPoint = points[i];
+            break;
+        }
+    }
+    
+    return missingPoint;
+}
 
-    // Find the coordinates of the eighth point
-    eighthPoint.x = points[0].x + points[3].x - points[1].x;
-    eighthPoint.y = points[0].y + points[3].y - points[1].y;
-    eighthPoint.z = points[0].z + points[3].z - points[1].z;
+int main() {
+    Point points[7] = {
+        {7, 9, 9},
+        {7, 9, 3},
+        {8, 9, 3},
+        {8, 9, 9},
+        {8, 8, 3},
+        {7, 8, 3},
+        {7, 8, 9}
+    };
 
-    std::cout << "Coordinates of the eighth point are: (" << eighthPoint.x << ", " << eighthPoint.y << ", " << eighthPoint.z << ")\n";
+    Point missingPoint = findMissingPoint(points, 7);
+
+    std::cout << "The coordinates of the missing 8th point are: (" 
+              << missingPoint.x << ", " << missingPoint.y << ", " << missingPoint.z << ")" << std::endl;
 
     return 0;
 }
